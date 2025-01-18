@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telugu Language Translator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Telugu Language Translator</h1>
+        <div class="input-section">
+            <textarea id="input-text" placeholder="Enter text here..." rows="4"></textarea>
+            <button id="translate-button">Translate</button>
+        </div>
+        <div class="output-section">
+            <h2>Translated Text:</h2>
+            <p id="translated-text">Your translation will appear here...</p>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#translate-button').click(function() {
+                var text = $('#input-text').val();
+                $.ajax({
+                    url: '/translate',
+                    method: 'POST',
+                    data: { text: text },
+                    success: function(response) {
+                        $('#translated-text').text(response.translated_text);
+                    },
+                    error: function() {
+                        alert('Error occurred while translating.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+
